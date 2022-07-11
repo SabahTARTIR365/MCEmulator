@@ -16,20 +16,29 @@ void Services::Add(Command command)
 void Services::Excute()
 {
 	Command CurrentCommand;
+	Response CurrentResponse;
 	while (isExcute)
 	{
 		while (!PriorityQueue.empty())
 		{
 
+            CurrentCommand = PriorityQueue.front();
+			CurrentResponse.command = CurrentCommand;
+			CurrentResponse.command.Type = "Response for " + CurrentCommand.Type;
+			CurrentResponse.status = "Succeeded";
+			CurrentResponse.print();
+			PriorityQueue.pop();
 
-			CurrentCommand = PriorityQueue.front();
 			if (CurrentCommand.Type == "write")
 			{
 
 			}
 			else if (CurrentCommand.Type == "read")
 			{
-
+				CurrentResponse.print();
+				//get data to be printed
+				//here------
+				PriorityQueue.pop();
 			}
 			else if (CurrentCommand.Type == "delete")
 			{
@@ -56,6 +65,8 @@ void Services::Remove(int Id)
 
 void Services::Abort()
 {
+	isExcute = false;
+	cout << "The Process aborted \n";
 }
 
 void Services::pushOnTheFrontOfQueue(Command Currentcommand)

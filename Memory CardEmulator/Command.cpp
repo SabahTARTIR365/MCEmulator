@@ -1,26 +1,28 @@
-
 #include <cstdint>
-#include <string.h>
 #include <string>
 #include <iostream>
 using namespace std;
 struct Command {
 	int Id;
-	char Type[10]="hi";
-	bool Priority;
-	//Data *data;
-	string print()const { //to_string() const {
-		printf("Hello, World! -----------SABAAAAAAAAAAAAH \n");
-	    //printf(" Command # %d ,%s ,%b \n", Id, Type, Priority);
-		cout << Id;
-		cout << Type;
-		cout << Priority;
-		cout << "hello--------------------------------------------";
-		//cout << "{ Command #" << Id << "( " + Type + ") " << Priority ? "Quick command " : "Simple command";
-		return "{ Command #" + std::to_string(Id) + "( " +Type+ ") " + (Priority ? "Quick command " : "Simple command") + " }";
-	}
-};
+	string Type = "write";
+	bool Priority = true;
+	//Data data;
 
+	string IsQuickCommand()const {
+		return Priority ? "Quick command " : "Simple command";
+	}
+	 void print()const {
+		printf("Inside Print function \n");
+		cout << "Command #" << Id << "( " + Type + ") " << IsQuickCommand() << "\n";
+	}
+
+	Command(int id, string type, bool priority) {
+		Id = id;
+		Type = type;
+		Priority = priority;
+	}
+	Command() {}
+};
 struct Data{
 	uint8_t Length;
 	uint8_t Value;// [Length] ;// 
