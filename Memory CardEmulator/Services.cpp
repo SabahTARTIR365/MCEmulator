@@ -15,15 +15,43 @@ void Services::Add(Command command)
 
 void Services::Excute()
 {
+	Command CurrentCommand;
+	while (isExcute)
+	{
+		while (!PriorityQueue.empty())
+		{
 
+
+			CurrentCommand = PriorityQueue.front();
+			if (CurrentCommand.Type == "write")
+			{
+
+			}
+			else if (CurrentCommand.Type == "read")
+			{
+
+			}
+			else if (CurrentCommand.Type == "delete")
+			{
+
+			}
+		}
+
+    }
 }
-
+/*! \brief remove command from PriorityQueue
+ *
+ * Removing command will be according to its position
+ *  if it was in the top of queue will be removed directly 
+ *  else a sawp process will happen to remove it from the queue
+ */
 void Services::Remove(int Id)
 {
-	if (isExist(Id)) {
-
+	if (isExist(Id))
+	{
+		PriorityQueue.front().Id == Id ?PriorityQueue.pop():deleteFromAnyPlace(Id);	
 	}
-	//else printf("not exist");
+	else cout<<" Id is not not exist";
 }
 
 void Services::Abort()
@@ -39,11 +67,8 @@ void Services::pushOnTheFrontOfQueue(Command Currentcommand)
 		PriorityQueue.pop();
 	}
 	PriorityQueue.push(Currentcommand);
-	while (!replacmentQueue.empty())
-	{
-		PriorityQueue.push(replacmentQueue.front());
-		replacmentQueue.pop();
-	}
+	swap(replacmentQueue);
+
 }
 
 bool Services::isExist(int Id)
@@ -58,4 +83,34 @@ while (!TemporaryQueue.empty())
     TemporaryQueue.pop();
 } 
 	return false;
+}
+
+void Services::swap(queue<Command> SwapedQueue)
+{
+	while (!SwapedQueue.empty())
+	{
+		PriorityQueue.push(SwapedQueue.front());
+		SwapedQueue.pop();
+	}
+}
+
+void Services::deleteFromAnyPlace(int Id)
+{
+	queue<Command> replacmentQueue;
+	while (!PriorityQueue.empty())
+	{
+		if (PriorityQueue.front().Id == Id)
+		{
+			PriorityQueue.pop();
+		}
+		else
+		{
+			replacmentQueue.push(PriorityQueue.front());
+			PriorityQueue.pop();
+		}
+
+	}
+	swap(replacmentQueue);
+	cout << "deleted successfully";
+
 }
